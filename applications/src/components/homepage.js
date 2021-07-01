@@ -1,7 +1,5 @@
 
 import { PageHeader, Input } from 'antd';
-import PostGrid from './posts';
-
 const { Search } = Input;
 
 function HomePage(props) {
@@ -18,7 +16,6 @@ function HomePage(props) {
             title="Web API Development Blog"
             subTitle="Welcome to the demo blog."/>
         </div>  
-        <PostGrid />
       </div>
     </>  
   );
