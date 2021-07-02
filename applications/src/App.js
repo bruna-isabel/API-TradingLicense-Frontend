@@ -6,6 +6,9 @@ import NavBar from './components/navbar';
 import HomePage from './components/homepage';
 import Account from './components/account'; 
 import Application from './components/application';
+import Applications from './components/applications';
+import SignUp from './components/signup';
+import Login from './components/login';
 
 const { Header, Content, Footer } = Layout;
 
@@ -20,12 +23,11 @@ function App() {
 
           <Content> 
             <Switch>
-              <Route path="/auth/signup" children={<Account />} /> 
-              <Route path="/applications" children={<Account />} /> 
+              <Route path="/auth/signup" children={<SignUp />} /> 
+              <Route path="/applications" children={<Applications />} /> 
+              <Route path="/auth/login/" children={<Login />} /> 
               <Route path="/account" children={<Account />} /> 
-              <Route path="/auth/login/" children={<Account />} /> 
-              <Route path="/account" children={<Account />} /> 
-              <Route path="/application/:id" children={<Application />} /> 
+              <Route path="/application/:id" children={<Application />} />
               <Route path="/" children={<HomePage />} /> 
             </Switch> 
           </Content>
