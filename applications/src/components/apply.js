@@ -14,24 +14,14 @@ const tailFormItemLayout = {
 /* Validation Functions*/
 // define validation rules for the form fields
 
-const emailValidation = [
-    {type: 'email', message: 'Email is incorrect format.'},
+const fieldValidation = [
     {required: true, message: 'Please fill in all the fields!' }
 ];
 
-const passwordValidation = [
-    { required: true, message: 'Please fill in all the fields!' }
-];
-
-const nameValidation = [
-    { required: true, message: 'Please fill in all the fields!', whitespace: true }
-]
-
-
 /**
-* Registration form component for app signup.
+* Application form component for app signup.
 */
-class SignUpForm extends React.Component {
+class ApplicationForm extends React.Component {
 
     constructor(props) {
         super(props);
@@ -41,7 +31,7 @@ class SignUpForm extends React.Component {
     onFinish = (values) => {
         console.log('Received values of form: ', values);
         const { confirm, ...data } = values;  // ignore the 'confirm' value in data sent
-        fetch('https://earth-almanac-3030.codio-box.uk/auth/signup', {
+        fetch('https://earth-almanac-3030.codio-box.uk/applications', {
             method: "POST",
             body: JSON.stringify(data),
             headers: {
@@ -53,7 +43,7 @@ class SignUpForm extends React.Component {
         .then(data => {
             // TODO: display success message and/or redirect
             console.log(data);
-            alert("User added")
+            alert("Application Added")
         })
         .catch(error => {
             // TODO: show nicely formatted error message and clear form
@@ -63,17 +53,22 @@ class SignUpForm extends React.Component {
 
     render() {
         return (
-        <Form {...formItemLayout} name="register" onFinish={this.onFinish} scrollToFirstError>
-            <Form.Item {...tailFormItemLayout} name="name" rules={nameValidation} label="name">
+        <Form {...formItemLayout} name="apply" onFinish={this.onFinish} scrollToFirstError>
+			
+            <Form.Item {...tailFormItemLayout} name="business_name" rules= {fieldValidation} label="Business Name">
                 <Input />
             </Form.Item>
 
-            <Form.Item {...tailFormItemLayout} name="email" rules= {emailValidation} label="E-mail">
+            <Form.Item {...tailFormItemLayout} name="description" rules={fieldValidation} label="Description">
                 <Input />
             </Form.Item>
 
-            <Form.Item {...tailFormItemLayout} name="password" rules={passwordValidation} label="Password" hasFeedback>
-                <Input.Password />
+            <Form.Item {...tailFormItemLayout} name="address" rules={fieldValidation} label="Address">
+                <Input />
+            </Form.Item>
+
+            <Form.Item {...tailFormItemLayout} name="date_founded" rules={fieldValidation} label="Date founded">
+                <Input />
             </Form.Item>
         
             <Form.Item {...tailFormItemLayout}>
@@ -83,8 +78,9 @@ class SignUpForm extends React.Component {
             </Form.Item>
         </Form>
         );
+
     };
 };
 
 
-export default SignUpForm;
+export default ApplicationForm;
