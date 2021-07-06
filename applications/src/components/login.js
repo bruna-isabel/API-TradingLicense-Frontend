@@ -1,6 +1,7 @@
 import React from 'react';
 import { Form, Input, Button } from 'antd';
 import { status, json } from '../utilities/requestHandlers';
+import UserContext from '../contexts/user';
 
 /* Better Format of Form */
 const formItemLayout = {
@@ -25,18 +26,19 @@ const passwordValidation = [
 
 let appJWTToken
 
-
 /**
 * Login form component for app signup.
 */
 class LoginForm extends React.Component {
+	
+	static contextType = UserContext;
 
     constructor(props) {
         super(props);
-        this.onFinish = this.onFinish.bind(this);
+        this.login = this.login.bind(this)
     }
 
-    onFinish = (values) => {
+    login = (values) => {
         console.log('Received values of form: ', values);
         const { email, password} = values;  // ignore the 'confirm' value in data sent
         fetch('https://earth-almanac-3030.codio-box.uk/auth/login', {
@@ -46,15 +48,14 @@ class LoginForm extends React.Component {
                 Authorization: `Bearer ${appJWTToken}`
             }        
         })
-        .then(status)
-        .then(json)
-        .then(data => {
-            // TODO: display success message and/or redirect
-            console.log(data);
-            alert("User Logged In")
-			data.password = password
-			 console.log(data);
-        })
+			.then(status)
+			.then(json)
+			.then(user => {
+				console.log('Logged in successfully');
+				user.password = password
+				console.log(user);
+				this.context.login(user);
+			})
         .catch(error => {
             // TODO: show nicely formatted error message and clear form
             alert(`Error: ${JSON.stringify(error)}`);
